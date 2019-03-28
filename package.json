@@ -35,6 +35,8 @@
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
+    "@types/bonjour": "^3.5.5",
+    "@types/crypto-js": "^3.1.43",
     "@types/mdns": "0.0.33",
     "@types/mocha": "^5.2.6",
     "@types/node": "^11.12.0",
@@ -43,8 +45,8 @@
     "vscode": "^1.1.33"
   },
   "dependencies": {
-    "@types/bonjour": "^3.5.5",
     "bonjour": "^3.5.0",
+    "crypto-js": "^3.1.9-1",
     "random-words": "^1.1.0"
   }
 }

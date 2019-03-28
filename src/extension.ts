@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 import { userInfo } from "os";
+import * as CryptoJS from "crypto-js";
 const randomWords = require("random-words");
 import * as _bonjour from "bonjour";
 const bonjour = _bonjour();
@@ -12,35 +13,34 @@ const serviceName = "liveShare";
 const publishTimeout = 15; // in seconds
 const discoveryTimeout = 5; // in seconds
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-  // Use the console to output diagnostic information (console.log) and errors (console.error)
-  // This line of code will only be executed once when your extension is activated
-  console.log(
-    'Congratulations, your extension "vs-live-share-mdns" is now active!'
-  );
-
-  // The command has been defined in the package.json file
-  // Now provide the implementation of the command with registerCommand
-  // The commandId parameter must match the command field in package.json
   let disposable = vscode.commands.registerCommand(
     "extension.liveShareMdns.start",
     async () => {
-      // The code you place here will be executed every time your command is executed
       await vscode.commands.executeCommand("liveshare.start");
       const liveShareLink = await vscode.env.clipboard.readText();
+      const liveShareCode = liveShareLink.split("?")[1];
       const password = randomWords();
+      const hashedPassword = CryptoJS.SHA256(password).toString();
+      const encryptedLink = CryptoJS.AES.encrypt(
+        liveShareCode,
+        password
+      ).toString();
 
       const ad = bonjour.publish({
         name: userName,
         type: serviceName,
         port: 8000,
         txt: {
-          password: password,
-          l: liveShareLink.split("?")[1]
+          p: hashedPassword,
+          l: encryptedLink
         }
       });
+
+      // Display a message box to the user
+      vscode.window.showInformationMessage(
+        `Live Share Mdns: session password is "${password}"`
+      );
 
       await vscode.window.withProgress(
         {
@@ -64,18 +64,15 @@ export function activate(context: vscode.ExtensionContext) {
               progress.report({ increment: step });
 
               if (elapsed === publishTimeout) {
+                clearInterval(interval);
                 // TODO!
                 ad.stop(() => true);
                 vscode.window.showErrorMessage("Stopped publishing");
+                resolve();
               }
             }, 1000);
           });
         }
-      );
-
-      // Display a message box to the user
-      vscode.window.showInformationMessage(
-        `Live Share Mdns: session password is "${password}"`
       );
     }
   );
@@ -137,11 +134,40 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const selected = await vscode.window.showQuickPick<item>(services);
-      if (selected) {
-        let link = selected.service.txt["l"];
-        link = `https://insiders.liveshare.vsengsaas.visualstudio.com/join?${link}`;
-        vscode.commands.executeCommand("liveshare.openLink", link);
+      if (!selected) {
+        return;
       }
+
+      const askPassword = async (): Promise<string | undefined> => {
+        const password = await vscode.window.showInputBox({
+          ignoreFocusOut: true,
+          password: true,
+          placeHolder: "Please input the session's password here"
+        });
+        if (!password) {
+          return;
+        }
+
+        const hashedPassword = selected.service.txt["p"];
+        const match = CryptoJS.SHA256(password).toString() === hashedPassword;
+        if (!match) {
+          vscode.window.showErrorMessage("wrong password, please try again");
+          return await askPassword();
+        }
+        return password;
+      };
+
+      const password = await askPassword();
+      if (!password) {
+        return;
+      }
+
+      const encryptedCode = selected.service.txt["l"];
+      const code = CryptoJS.AES.decrypt(encryptedCode, password).toString(
+        CryptoJS.enc.Utf8
+      );
+      const link = `https://insiders.liveshare.vsengsaas.visualstudio.com/join?${code}`;
+      vscode.commands.executeCommand("liveshare.openLink", link);
     }
   );
 
