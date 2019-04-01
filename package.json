@@ -3,7 +3,7 @@
   "publisher": "lherman-cs",
   "displayName": "VS Live Share Mdns",
   "description": "Share Live Share sessions with mdns",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "repository": {
     "type": "git",
     "url": "https://github.com/lherman-cs/vs-live-share-mdns.git"
@@ -11,8 +11,19 @@
   "engines": {
     "vscode": "^1.32.0"
   },
+  "keywords": [
+    "sharing",
+    "discovery",
+    "peer",
+    "liveshare",
+    "mdns"
+  ],
+  "preview": true,
   "categories": [
     "Other"
+  ],
+  "extensionDependencies": [
+    "ms-vsliveshare.vsliveshare"
   ],
   "activationEvents": [
     "onCommand:extension.liveShareMdns.start",
