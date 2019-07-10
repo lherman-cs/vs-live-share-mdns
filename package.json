@@ -3,7 +3,7 @@
   "publisher": "lherman-cs",
   "displayName": "VS Live Share Mdns",
   "description": "Share Live Share sessions with mdns",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "repository": {
     "type": "git",
     "url": "https://github.com/lherman-cs/vs-live-share-mdns.git"
@@ -26,15 +26,15 @@
     "ms-vsliveshare.vsliveshare"
   ],
   "activationEvents": [
-    "onCommand:extension.liveShareMdns.start",
+    "onCommand:extension.liveShareMdns.publish",
     "onCommand:extension.liveShareMdns.discover"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "extension.liveShareMdns.start",
-        "title": "Live Share Mdns: Start"
+        "command": "extension.liveShareMdns.publish",
+        "title": "Live Share Mdns: Publish"
       },
       {
         "command": "extension.liveShareMdns.discover",

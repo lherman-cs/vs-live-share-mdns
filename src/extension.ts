@@ -1,10 +1,10 @@
 import vscode from "vscode";
-import startCmd from "./start";
+import publishCmd from "./publish";
 import discoverCmd from "./discover";
 import { extNamespace } from "./const";
 
 const commands = {
-  start: startCmd,
+  publish: publishCmd,
   discover: discoverCmd
 };
 
@@ -18,4 +18,4 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
