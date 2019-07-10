@@ -3,7 +3,7 @@
   "publisher": "lherman-cs",
   "displayName": "Live Share MDNS",
   "description": "Easily Live Share Session Link Without Going Out From IDE",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "repository": {
     "type": "git",
     "url": "https://github.com/lherman-cs/vs-live-share-mdns.git"
