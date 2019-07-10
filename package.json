@@ -3,7 +3,7 @@
   "publisher": "lherman-cs",
   "displayName": "VS Live Share Mdns",
   "description": "Share Live Share sessions with mdns",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "repository": {
     "type": "git",
     "url": "https://github.com/lherman-cs/vs-live-share-mdns.git"
@@ -47,7 +47,8 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    "test": "npm run compile && node ./node_modules/vscode/bin/test",
+    "publish": "vsce publish"
   },
   "devDependencies": {
     "@types/bonjour": "^3.5.5",
@@ -57,6 +58,7 @@
     "@types/node": "^11.12.0",
     "tslint": "^5.14.0",
     "typescript": "^3.3.4000",
+    "vsce": "^1.64.0",
     "vscode": "^1.1.33"
   },
   "dependencies": {
