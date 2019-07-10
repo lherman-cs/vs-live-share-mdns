@@ -33,3 +33,8 @@ Go to the [command palette](https://code.visualstudio.com/docs/getstarted/userin
 Get the password from the host. For example, in this demo, the password is "`mud`".
 
 ![join](https://raw.githubusercontent.com/lherman-cs/vs-live-share-mdns/master/demo/join-2.gif)
+
+
+## Disclaimer
+
+Since this extension uses `MDNS Discovery`, all of its weaknesses will apply here too. For example, this extension will not work if your teammates are not connected to the same network.
