@@ -7,9 +7,8 @@ const bonjour = _bonjour();
 import { userName, serviceName, publishTimeout } from "./const";
 import { Session } from "./interface";
 
-function publish(link: string) {
+function publish(link: string, password: string) {
   const liveShareCode = link.split("?")[1];
-  const password = randomWords();
   const hashedPassword = CryptoJS.SHA256(password).toString();
   const encryptedLink = CryptoJS.AES.encrypt(
     liveShareCode,
@@ -21,11 +20,6 @@ function publish(link: string) {
     l: encryptedLink
   };
 
-  // Display a message box to the user
-  vscode.window.showInformationMessage(
-    `Live Share Mdns: session password is "${password}"`
-  );
-
   return bonjour.publish({
     name: userName,
     type: serviceName,
@@ -34,15 +28,16 @@ function publish(link: string) {
   });
 }
 
-export default async function() {
+export default async function () {
   await vscode.commands.executeCommand("liveshare.start");
   const liveShareLink = await vscode.env.clipboard.readText();
-  const ad = publish(liveShareLink);
+  const password = randomWords();
+  const ad = publish(liveShareLink, password);
 
   await vscode.window.withProgress(
     {
       location: vscode.ProgressLocation.Notification,
-      title: "Waiting for your teammate",
+      title: `The password is "${password}". Waiting for your teammate(s)...`,
       cancellable: true
     },
 
