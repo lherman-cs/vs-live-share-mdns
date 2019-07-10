@@ -1,8 +1,8 @@
 {
   "name": "vs-live-share-mdns",
   "publisher": "lherman-cs",
-  "displayName": "VS Live Share Mdns",
-  "description": "Share Live Share sessions with mdns",
+  "displayName": "Live Share MDNS",
+  "description": "Easily Live Share Session Link Without Going Out From IDE",
   "version": "0.0.10",
   "repository": {
     "type": "git",
