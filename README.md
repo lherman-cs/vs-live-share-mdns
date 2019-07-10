@@ -18,18 +18,18 @@ This is the problem that this extension is trying to solve! You don't need to go
 
 Go to the [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) (press ⇧⌘P). Then, find "`Live Share Mdns: Publish`" and share the session password with your friend!
 
-![publish](demo/publish.gif)
+![publish](https://raw.githubusercontent.com/lherman-cs/vs-live-share-mdns/master/demo/publish.gif)
 
 
 ### 2. [Teammate] Discover the session
 
 Go to the [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) (press ⇧⌘P). Then, find "`Live Share Mdns: Discover`". If the dialog says that you have discovered the host, you can cancel at anytime. Another dialog will show up to give you a list of hosts.
 
-![join](demo/join-1.gif)
+![join](https://raw.githubusercontent.com/lherman-cs/vs-live-share-mdns/master/demo/join-1.gif)
 
 
 ### 3. [Teammate] Enter the password and collaborate!
 
 Get the password from the host. For example, in this demo, the password is "`mud`".
 
-![join](demo/join-2.gif)
+![join](https://raw.githubusercontent.com/lherman-cs/vs-live-share-mdns/master/demo/join-2.gif)
